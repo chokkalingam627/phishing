@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico.jpeg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>HI!!!</h1>
+    <ul>
+        {% for i in elements %}
+            <div class="flex-container">
+                <div><input type="checkbox" onclick="onchecked(this)" id="{{ i }}"></div>
+                <div><li id="li{{ i }}"> {{ i }} </li></div>
+            </div>
+            <h5 class="h5element"></h5>
+        {% endfor %}
+    </ul>
+    <button onclick="onbuttonclicked()">Add task</button>
+    <input type="text" class="hide" id="textbox">
+    <script defer>
+        var x = document.getElementById("textbox")
+        function onbuttonclicked(){
+            x.className="show";
+        }
+        x.addEventListener("keypress", function(event){
+            if (event.key == "Enter"){
+                x.className="hide";
+                y = x.value
+                console.log(y);
+                x.value = ""
+                $.ajax({
+                    url: '/variable',
+                    type: 'POST',
+                    data: { "data" : y },
+                    success: function(response) {
+                        window.location.href = '{{url_for("welcome")}}';
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                });
+            }
+        });
+        function onchecked(ele){
+            var id  = ele.id
+            console.log(id)
+            $.ajax({
+                url: '/delete',
+                type: 'POST',
+                data: { "data" : id },
+                success: function(response){
+                    window.location.href = '{{url_for("welcome")}}';
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

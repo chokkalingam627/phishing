@@ -1,0 +1,21 @@
+.hide {
+    display: none;
+}
+.show {
+    display: block;
+}
+.flex-container {
+    display: flex;
+    border-style: solid;
+    border-color: black;
+    margin-right: 1100px;
+}
+.flex-container > div {
+    margin: 10px;
+    padding: 10px;
+    font-size: 20px;
+}
+.h5element{
+    background-color: white;
+    margin: 4px;
+}
